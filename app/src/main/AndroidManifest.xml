@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="io.github.yuweiguocn.servicedemo"
+<manifest package="io.github.lys.servicedemo"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
@@ -18,10 +18,21 @@
             </intent-filter>
         </activity>
 
+        <!-- enable表示允许Service运行,exported表示允许其他应用隐式调用该服务,persistent后台免杀；priority优先级最高-->
+        <service android:name=".LocalService"
+            android:persistent="true"
+            android:priority="1000">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" /><!--开机广播-->
+                <action android:name="android.intent.action.ACTION_TIME_TICK" /><!--每分钟广播每分钟发送一次，检测服务是否存在，不存在就就重启-->
+            </intent-filter>
+        </service>
 
-        <service android:name=".LocalService"/>
         <service
-            android:name=".MessengerService"
+            android:name=".RemoteMessengerService"
+            android:priority="1000"
+            android:enabled="true"
+            android:exported="true"
             android:process=":remote"/>
     </application>
 
